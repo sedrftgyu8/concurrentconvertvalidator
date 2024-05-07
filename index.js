@@ -1,25 +1,26 @@
-function ladderLength(beginWord, endWord, wordList) {
-  const wordSet = new Set(wordList);
-  if (!wordSet.has(endWord)) return 0;
-  let count = 0;
-  const queue = [beginWord];
-  while (queue.length) {
-    const size = queue.length;
-    count++;
-    for (let i = 0; i < size; i++) {
-      const current = queue.shift();
-      if (current === endWord) return count;
-      for (let j = 0; j < current.length; j++) {
-        for (let k = 97; k <= 122; k++) {
-          const newWord =
-            current.slice(0, j) + String.fromCharCode(k) + current.slice(j + 1);
-          if (wordSet.has(newWord)) {
-            queue.push(newWord);
-            wordSet.delete(newWord);
-          }
-        }
+const mergeSortIterative = (arr) => {
+  const merge = (left, right) => {
+    let result = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+    while (leftIndex < left.length && rightIndex < right.length) {
+      if (left[leftIndex] < right[rightIndex]) {
+        result.push(left[leftIndex]);
+        leftIndex++;
+      } else {
+        result.push(right[rightIndex]);
+        rightIndex++;
       }
     }
+    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+  };
+  const mergeSize = 2;
+  for (let i = 0; i < arr.length; i += mergeSize) {
+    for (let j = i; j < arr.length; j += mergeSize) {
+      const left = arr.slice(j, j + mergeSize / 2);
+      const right = arr.slice(j + mergeSize / 2, j + mergeSize);
+      arr.splice(j, mergeSize, ...merge(left, right));
+    }
   }
-  return 0;
-}
+  return arr;
+};
