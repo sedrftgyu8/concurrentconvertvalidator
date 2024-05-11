@@ -1,19 +1,20 @@
-function rotateRight(head, k) {
-  if (!head) return null;
-  let length = 1;
-  let tail = head;
-  while (tail.next) {
-    length++;
-    tail = tail.next;
+function findCircleNum(M) {
+  if (!M || M.length === 0) return 0;
+  const visited = new Array(M.length).fill(false);
+  let count = 0;
+  for (let i = 0; i < M.length; i++) {
+    if (!visited[i]) {
+      dfs(M, i, visited);
+      count++;
+    }
   }
-  k %= length;
-  if (k === 0) return head;
-  let newTail = head;
-  for (let i = 0; i < length - k - 1; i++) {
-    newTail = newTail.next;
+  return count;
+}
+function dfs(M, i, visited) {
+  visited[i] = true;
+  for (let j = 0; j < M.length; j++) {
+    if (M[i][j] === 1 && !visited[j]) {
+      dfs(M, j, visited);
+    }
   }
-  const newHead = newTail.next;
-  newTail.next = null;
-  tail.next = head;
-  return newHead;
 }
