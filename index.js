@@ -1,1 +1,3 @@
-const initial = (arr) => arr.slice(0, -1);
+const word = "hello";
+const reversedWord = word.split("").reverse().join("");
+console.log(reversedWord); // olleh
